@@ -1,0 +1,6 @@
+rootProject.name = 'Stock Analysis'
+
+include 'stock-kafka-producer'
+include 'stock-spark-processor'
+include 'stock-dashboard'
+
