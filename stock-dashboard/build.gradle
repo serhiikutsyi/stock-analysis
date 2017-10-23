@@ -9,7 +9,12 @@ repositories {
     mavenCentral()
 }
 
+springBoot {
+    mainClass = "com.serhiikutsyi.stock.dashboard.DashboardApplication"
+}
+
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
