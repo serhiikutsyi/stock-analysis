@@ -15,6 +15,7 @@ import org.supercsv.prefs.CsvPreference;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,14 @@ public class StockCsvParserServiceImpl implements StockParserService {
 
     private ICsvBeanReader reader;
     private String[] header;
+
+    DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+            .appendPattern("[yyyy-MM-dd HH:mm:ss]")
+            .appendPattern("[yyyy-MM-dd]")
+            .toFormatter();
+
     private final CellProcessor[] processors = new CellProcessor[]{
-            new ParseLocalDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+            new ParseLocalDate(formatter),
             null,
             new ParseDouble(), new ParseDouble(), new ParseDouble(), new ParseDouble(), new ParseDouble()};
 
