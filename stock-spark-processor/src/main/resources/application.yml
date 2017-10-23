@@ -1,0 +1,10 @@
+spark:
+  application:
+    name: Stock Processor
+  master: local[*]
+  checkpoint:
+    dir: /tmp/stock-streaming-data
+kafka:
+  zookeeper: localhost:2181
+  brokerlist: localhost:9092
+  topic: stock.prices
