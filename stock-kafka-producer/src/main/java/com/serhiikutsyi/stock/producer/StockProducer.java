@@ -5,6 +5,7 @@ import com.serhiikutsyi.stock.service.StockParserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,10 @@ import java.util.List;
 @Component
 public class StockProducer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StockProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(StockProducer.class);
 
+    @Value("${kafka.topic.stock}")
+    private String topic;
     private StockParserService stockParserService;
     private KafkaTemplate<String, Stock> kafkaTemplate;
 
@@ -32,12 +35,12 @@ public class StockProducer {
         kafkaTemplate.send(topic, stock);
     }
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
     public void send() throws Exception {
         List<Stock> stockList;
         while (!(stockList = stockParserService.read(30)).isEmpty()) {
             for (Stock stock : stockList) {
-                send("stock", stock);
+                send(topic, stock);
             }
         }
     }
